@@ -1,0 +1,85 @@
+.heading {
+  text-align: center;
+}
+
+.sub-heading {
+  text-align: center;
+  font-size: small;
+}
+
+.heading-link {
+  text-align: center;
+  font-size: x-small;
+}
+
+.head-link {
+  text-align: center;
+  font-size: x-small;
+}
+
+.edit-button {
+  width: 100px;
+  margin: 10px;
+}
+
+.delete-button {
+  width: 100px;
+  margin: 10px;
+}
+
+.add-button {
+  margin: 10px;
+  width: 60px;
+}
+
+.card-header {
+  margin: 10px;
+  height: 30px;
+  font-size: x-small;
+  border: none;
+}
+
+button.btn.btn-link {
+  font-size: 20px;
+  text-align: center;
+  position: absolute;
+  top: 0px;
+}
+
+.btn-link {
+  font-size: 20px;
+}
+
+button {
+  font-size: 20px;
+}
+
+a.button {
+  display: inline-block;
+  padding: 0.7em 1.4em;
+  margin: 0 0.3em 0.3em 0;
+  border-radius: 0.15em;
+  box-sizing: border-box;
+  text-decoration: none;
+  font-family: "Roboto", sans-serif;
+  text-transform: none;
+  font-weight: 400;
+  color: #ffffff;
+  background-color: #3369ff;
+  box-shadow: inset 0 -0.6em 0 -0.35em rgba(0, 0, 0, 0.17);
+  text-align: center;
+  position: relative;
+  font-size: 10px;
+}
+
+a.button:active {
+  top: 0.1em;
+  border: none;
+}
+
+@media all and (max-width: 30em) {
+   a.button {
+    display: block;
+    margin: 0.4em auto;
+  }
+}
