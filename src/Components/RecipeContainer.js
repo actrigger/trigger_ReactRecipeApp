@@ -102,3 +102,61 @@
 // };
 
 // export default ReciepeContainer;
+
+
+
+//after modals
+
+// <div className="accordian container">
+//         {recipes.map(({ title, ingredients }, i) =>  {
+//           return (
+//             <div>
+//                 <Accordion key={i}>
+//                   <Card>
+//                     <Card.Header>
+//                       <Accordion.Toggle as={Button} variant="link" eventKey="0">
+//                         {title}
+//                       </Accordion.Toggle>
+//                     </Card.Header>
+//                     <Accordion.Collapse eventKey="0">
+                    
+//                       <Card.Body>
+                        
+                        
+                        
+                        
+
+                        
+//                         <Button
+//                           variant="info"
+//                           onClick={handleEditModal(recipe)}
+//                         >
+//                           Edit
+//                         </Button>
+//                         <Button
+//                           className="delete-button"
+//                           variant="danger"
+//                           onClick={deleteRecipe}
+//                         >
+//                           Delete
+//                         </Button>
+//                       </Card.Body>
+//                     </Accordion.Collapse>
+//                   </Card>
+//                 </Accordion>
+//             </div>
+//           );
+//         })}
+//       </div>
+//       <div className="add-button">
+//         <Button
+//           className="add-button"
+//           variant="primary"
+//           size="sm"
+//           onClick={modalShow}
+//         >
+//           Add
+//         </Button>
+//       </div>     
+//     </div>
+//   );
