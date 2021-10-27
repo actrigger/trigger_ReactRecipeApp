@@ -38,20 +38,15 @@ const App = () => {
   useEffect(() => {
     getRecipes();
   }, []);
-  
-  
 
-  
-  
-  // function getIngredients2() {recipes.keys(({ingredients})).map(({ingredient}, j) => {
-  //   console.log (
-  //     <div key={j}><li>{ingredient}</li></div>
-  //   )
-  // })};
-
-  // useEffects(() =>{
-  //   getIngredients2();
-  // }, []);
+  function isLoading() { 
+    if(loading === true) { 
+      console.log("Data is loading") 
+    } else { 
+      console.log(null)
+     }
+  }
+   
 
   const saveRecipe = (e) => {
     e.preventDefault();
@@ -114,12 +109,14 @@ const App = () => {
   // }
 
   const handleRecipe = (event) => {
-    //? (loading) <p>Data is loading...</p> }; : { null };}
+    
     setTitle(event.target.value);
     setIngredients(event.target.value);
   }
 
-  
+  isLoading();
+  console.log(isLoading(null));
+
   
   return (
     <div>
@@ -137,7 +134,7 @@ const App = () => {
       </div>
         
       <div className="recipe-container">
-        {recipes.map((recipe, key) => {
+        {recipes.map(({title}, key) => {
           return(
             <div>
               <Accordion key={key}>
@@ -148,11 +145,11 @@ const App = () => {
                     </Accordion.Toggle>
                   </Card.Header>
                   <Accordion.Collapse eventKey="0">
-                    {ingredients.map((ingredient, key1) => {
+                    {Object.entries(recipe).map(([ingredients], i) => {
                       return(
                         <div>
-                          <Card.Body key={key1}>
-                            <li>{ingredient}</li>
+                          <Card.Body key={i}>
+                            <li>{ingredients}</li>
                             <Button
                               variant="info"
                               onClick={handleEditModal(recipe)}
@@ -163,9 +160,9 @@ const App = () => {
                               onClick={deleteRecipe}
                             >Delete</Button>
                           </Card.Body>
-                        </div>
-                      ) 
-                    })}
+                        </div>  
+                      );
+                    })}  
                   </Accordion.Collapse>
                 </Card>
               </Accordion>

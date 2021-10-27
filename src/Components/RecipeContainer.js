@@ -30,7 +30,7 @@
 //   // }, []);
 
 //   return (
-//     <div className="main-div recipe-container">
+//     <div className="main-div recipe-container
 //       {recipes.map((recipe) => {
 //         return (
 //           <div>
