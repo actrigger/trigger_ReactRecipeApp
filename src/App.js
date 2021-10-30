@@ -15,14 +15,13 @@ const App = () => {
   const [recipe, setRecipe] = useState({});
   const [ingredient, setIngredient] = useState("");
   //const ingredientList = ingredients.split();
-
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const modalShow = () => setShow(true);
   const modalClose = () => setShow(true);
-
   const ref = firebase.firestore().collection("recipes");
-  
+    
+
   function getRecipes() {
     setLoading(true);
     ref.onSnapshot((querySnapshot) => {
@@ -32,6 +31,7 @@ const App = () => {
       });
       setRecipes(items);
       setLoading(false);
+      console.log(items);
     });
   }
 
@@ -44,8 +44,11 @@ const App = () => {
       console.log("Data is loading") 
     } else { 
       console.log(null)
-     }
+    }
   }
+
+
+ 
    
 
   const saveRecipe = (e) => {
@@ -94,7 +97,6 @@ const App = () => {
   const handleEditModal= (editedObject) => {
       handleShow();
       console.log(editedObject);
-      setLoading();
       setRecipe(editedObject);
       setRecipe();
   }
@@ -109,15 +111,13 @@ const App = () => {
   // }
 
   const handleRecipe = (event) => {
-    
     setTitle(event.target.value);
     setIngredients(event.target.value);
   }
 
   isLoading();
-  console.log(isLoading(null));
-
-  
+  console.log(ref);
+ 
   return (
     <div>
       <div className="header-content">
@@ -132,74 +132,73 @@ const App = () => {
             </a>
           </p>
       </div>
-        
+ 
       <div className="recipe-container">
-        {recipes.map(({title}, key) => {
-          return(
-            <div>
-              <Accordion key={key}>
-                <Card className="main-card">
-                  <Card.Header>
-                    <Accordion.Toggle as={Button} variant="link" eventKey="0">
-                      {title}
-                    </Accordion.Toggle>
-                  </Card.Header>
-                  <Accordion.Collapse eventKey="0">
-                    {Object.entries(recipe).map(([ingredients], i) => {
-                      return(
-                        <div>
-                          <Card.Body key={i}>
-                            <li>{ingredients}</li>
-                            <Button
-                              variant="info"
-                              onClick={handleEditModal(recipe)}
-                            >Edit</Button>
-                            <Button
-                              className="delete-button"
+        {recipes.map((recipe, key) => (
+          <div key={key}>
+            {Object.entries(recipes).map(({title, ingredients}, id) => {
+              return(
+                <div key={id}>
+                  <Accordion>
+                    <Card className="main-card">
+                      <Card.Header>
+                        <Accordion.Toggle as={Button} variant="link" eventKey="0">
+                          {title}
+                        </Accordion.Toggle>
+                      </Card.Header>
+                      <Accordion.Collapse eventKey="0">
+                        <Card.Body>
+                          <ul>{recipe[ingredients]}</ul>
+                          <Button
+                            variant="info"
+                            onClick={handleEditModal(recipe)}
+                          >Edit</Button>
+                          <Button
+                            className="delete-button"
                               variant="danger"
                               onClick={deleteRecipe}
                             >Delete</Button>
                           </Card.Body>
-                        </div>  
-                      );
-                    })}  
-                  </Accordion.Collapse>
-                </Card>
-              </Accordion>
-            </div>
-          );
-        })}
+                        </Accordion.Collapse>
+                    
+                    </Card>
+                  </Accordion>
+                </div>
+              );
+            })}  
+          </div>      
+        ))};  
       </div>
       <div className="add-button">
-        <Button
-          className="add-button"
-          variant="primary"
-          size="sm"
-          onClick={modalShow}
-        >Add</Button>
-      </div>     
+          <Button
+            className="add-button"
+            variant="primary"
+            size="sm"
+            onClick={modalShow}
+          >Add</Button>
+        </div>     
       <div className="modals-container">
-        <div className="edit-modal">
-          <Modal
-            className="editRecipe"
-            show={show}
-            onHide={handleClose}
-            >
-            <Modal.Header closeButton>
-              <Modal.Title>Edit Recipe</Modal.Title>
-            </Modal.Header>
-            <Modal.Body>
-              <form>
-                <label>Recipe Title
-                  <input
-                    type="text"
-                    name="title"
-                    placeholder={title}
-                    value={title}
-                    onChange={handleRecipe}
-                  />
-                </label>
-                <label>Ingredients
+          <div className="edit-modal">
+            <Modal
+              className="editRecipe"
+              show={show}
+              onHide={handleClose}
+              >
+              <Modal.Header closeButton>
+                <Modal.Title>Edit Recipe</Modal.Title>
+              </Modal.Header>
+              <Modal.Body>
+                <form>
+                  <label>Recipe Title
+                    <input
+                      type="text"
+                      name="title"
+                      placeholder={title}
+                      value={title}
+                      onChange={handleRecipe}
+                    />
+                  </label>
+                  <label>Ingredients
                   <input
                     type="text"
                     name="ingredients"
@@ -208,73 +207,68 @@ const App = () => {
                     onChange={handleRecipe}
                   />
                 </label>
-                <Button
+                  <Button
                   className="close"
                   variant="outline-dark"
                   onClick={handleClose}
                   >
                   Close
                 </Button>
-                <Button 
+                  <Button 
                   className="update" 
                   variant="primary" 
                   onClick={saveRecipe}
                   >
                   Submit
                 </Button>
-              </form>
-            </Modal.Body>
-          </Modal>
+                </form>
+              </Modal.Body>
+            </Modal>
+          </div>
+          <div className="add-modal">
+            <Modal
+              className="addModal"
+              show={show}
+              onHide={modalClose}
+              >
+              <Modal.Header closeButton>
+                <Modal.Title>Add Recipe</Modal.Title>
+              </Modal.Header>
+              <Modal.Body>
+                <label>Recipe Title
+                  <input
+                    type="text"
+                    name="title"
+                    placeholder="Enter Recipe Title"
+                    value={title}
+                    id="addTitle"
+                    onChange={handleRecipe}
+                  />
+                </label>
+                <label>Ingredients
+                  <input
+                    type="text"
+                    name="ingredients"
+                    placeholder="Enter Ingredients, seperate each with a comma"
+                    value={ingredients}
+                    id="addIngredients"
+                    onChange={handleRecipe}
+                  />
+                </label>
+                <Button variant="outline-dark" onClick={modalClose}>
+                  Close
+                </Button>
+                <Button variant="primary" onClick={saveRecipe}>
+                  Save Changes
+                </Button>
+                <Button variant="primary" onClick={() => addRecipe(recipe)}>
+                  Submit
+                </Button>
+              </Modal.Body>
+            </Modal>
+          </div>
         </div>
-        <div className="add-modal">
-          <Modal
-            className="addModal"
-            show={show}
-            onHide={modalClose}
-            >
-            <Modal.Header closeButton>
-              <Modal.Title>Add Recipe</Modal.Title>
-            </Modal.Header>
-            <Modal.Body>
-              <label>Recipe Title
-                <input
-                  type="text"
-                  name="title"
-                  placeholder="Enter Recipe Title"
-                  value={title}
-                  id="addTitle"
-                  onChange={handleRecipe}
-                />
-              </label>
-              <label>Ingredients
-                <input
-                  type="text"
-                  name="ingredients"
-                  placeholder="Enter Ingredients, seperate each with a comma"
-                  value={ingredients}
-                  id="addIngredients"
-                  onChange={handleRecipe}
-                />
-              </label>
-              <Button variant="outline-dark" onClick={modalClose}>
-                Close
-              </Button>
-              <Button variant="primary" onClick={saveRecipe}>
-                Save Changes
-              </Button>
-              <Button variant="primary" onClick={() => addRecipe(recipe)}>
-                Submit
-              </Button>
-            </Modal.Body>
-          </Modal>
-        </div>
-      </div>
     </div>
   )  
 }
-
-
-
-
-
 export default App;
